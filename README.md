@@ -43,9 +43,7 @@ err = rand.Unmarshall(state)
 
 ## How do I know I can trust this repo?
 
-It uses the exact same RNG as `math/rand`; in fact most of this repo is copy-pasted directly from there:
-* [`rng.go` is copy-pasted entirely from `math/rand/`](https://cs.opensource.google/go/go/+/refs/tags/go1.19.3:src/math/rand/rng.go)
-* [so is rand.go](https://cs.opensource.google/go/go/+/refs/tags/go1.19.3:src/math/rand/rand.go)
+It uses the exact same RNG as `math/rand`; in fact most of this repo [is copy-pasted directly from there](https://cs.opensource.google/go/go/+/refs/tags/go1.19.3:src/math/rand).
 
 That's also why given the same seed, it will give you the exact same pseudo-random values as `math/rand`'s generator.
 
