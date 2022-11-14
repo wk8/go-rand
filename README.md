@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/wk8/go-rand/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/wk8/go-rand/tree/main)
+
 # Marshallable golang random generator
 
 ## Why?
