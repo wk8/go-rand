@@ -1,14 +1,15 @@
+// Copyright 2009 The Go Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package rand
 
-// This is a copy-pasta of the std lib's default math/rand RNG generator; except it also
-// allows dumping and loading the generator internal state. This comes in handy when
-// debugging a single test that fails given an initial seed for all tests: one can dump
-// the state of the generator at the start of the failing test, thus allowing to not
-// have to re-run all of the tests to get to the offending one.
-//
-// This file is copy-pasted untouched.
-//
-// ONLY EDIT THIS FILE TO BRING IT UP TO DATE TO STD LIB'S VERSION. NO MODIFICATION.
+/*
+ * Uniform distribution
+ *
+ * algorithm by
+ * DP Mitchell and JA Reeds
+ */
 
 const (
 	rngLen   = 607

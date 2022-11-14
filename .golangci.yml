@@ -2,14 +2,11 @@ run:
   tests: false
   skip-files:
     # skip the files that we copy-paste from the standard lib
+    - exp.go
+    - normal.go
     - rand.go
     - rng.go
-
-issues:
-  exclude-rules:
-    # it's better to keep that one concise, which gofumpt doesn't like
-    - path: ^alias.go
-      text: gofumpt
+    - zipf.go
 
 linters: 
   disable-all: true

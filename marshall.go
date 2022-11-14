@@ -2,6 +2,7 @@ package rand
 
 import (
 	"encoding/json"
+	"errors"
 )
 
 type MarshallableSource interface {
@@ -11,25 +12,24 @@ type MarshallableSource interface {
 	Unmarshall([]byte) error
 }
 
-func NewSource(seed int64) MarshallableSource {
-	var rng rngSource
-	rng.Seed(seed)
-	return &rng
-}
-
-var (
-	globalSource = NewSource(1).(*rngSource)
-	globalRand   = New(&lockedSource{rngSource: globalSource})
-)
+var errNotAMarshallableSource = errors.New("not a marshallable source")
 
 // Marshall marshalls the default Source.
 func Marshall() ([]byte, error) {
-	return globalSource.Marshall()
+	s, ok := globalRand.src.(MarshallableSource)
+	if !ok {
+		return nil, errNotAMarshallableSource
+	}
+	return s.Marshall()
 }
 
 // Unmarshall resets the default Source's internal state to the input's contents.
 func Unmarshall(input []byte) error {
-	return globalSource.Unmarshall(input)
+	s, ok := globalRand.src.(MarshallableSource)
+	if !ok {
+		return errNotAMarshallableSource
+	}
+	return s.Unmarshall(input)
 }
 
 type serializableRngSource struct {
@@ -63,12 +63,12 @@ func (r *lockedSource) Marshall() ([]byte, error) {
 	r.lk.Lock()
 	defer r.lk.Unlock()
 
-	return r.rngSource.Marshall()
+	return r.src.Marshall()
 }
 
 func (r *lockedSource) Unmarshall(input []byte) error {
 	r.lk.Lock()
 	defer r.lk.Unlock()
 
-	return r.rngSource.Unmarshall(input)
+	return r.src.Unmarshall(input)
 }
