@@ -2,11 +2,10 @@ package rand
 
 import (
 	"encoding/json"
-	"math/rand"
 )
 
 type MarshallableSource interface {
-	rand.Source
+	Source
 
 	Marshall() ([]byte, error)
 	Unmarshall([]byte) error
@@ -20,7 +19,7 @@ func NewSource(seed int64) MarshallableSource {
 
 var (
 	globalSource = NewSource(1).(*rngSource)
-	globalRand   = rand.New(&lockedSource{rngSource: globalSource})
+	globalRand   = New(&lockedSource{rngSource: globalSource})
 )
 
 // Marshall marshalls the default Source.

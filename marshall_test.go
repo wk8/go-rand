@@ -19,7 +19,7 @@ func TestRngMarshallUnmarshall(t *testing.T) {
 	values := make([]int, nIterations)
 	states := make([][]byte, nIterations)
 
-	r := rand.New(source)
+	r := New(source)
 	for i := 0; i < nIterations; i++ {
 		states[i] = marshall(t, source)
 		values[i] = r.Int()
@@ -33,7 +33,7 @@ func TestRngMarshallUnmarshall(t *testing.T) {
 			indices := randomPermutation(nIterations, permutationSeed)
 
 			s := &rngSource{}
-			r := rand.New(s)
+			r := New(s)
 
 			for _, j := range indices {
 				unmarshall(t, s, states[j])
@@ -61,7 +61,7 @@ func TestSameAsMathRand(t *testing.T) {
 		seed := time.Now().UnixNano()
 
 		t.Run(fmt.Sprintf("with seed %d", seed), func(t *testing.T) {
-			r := rand.New(NewSource(seed))
+			r := New(NewSource(seed))
 			original := rand.New(rand.NewSource(seed))
 
 			for j := 0; j < nIterations; j++ {
